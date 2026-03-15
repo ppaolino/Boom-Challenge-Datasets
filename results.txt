@@ -1,0 +1,66 @@
+
+================================================================================
+Script: train_gbrt_with_cv.py
+Model specification:
+  - MultiOutputRegressor(GradientBoostingRegressor(random_state=42))
+  - Best hyperparameters: {'estimator__learning_rate': 0.025, 'estimator__max_depth': 4, 'estimator__min_samples_leaf': 10, 'estimator__n_estimators': 220, 'estimator__subsample': 0.5}
+  - CV: KFold(n_splits=5, shuffle=True, random_state=42)
+  - Scoring: neg_mean_absolute_error
+
+Overall test metrics:
+  MAE=19.940380
+  RMSE=45.430911
+  R2=0.934628
+
+Challenge benchmark:
+  P80: MAE=7.716563, weight=0.30
+  R95: MAE=40.397086, weight=0.20
+  fines_frac: sMAPE=0.329634, weight=0.15
+  oversize_frac: sMAPE=0.211422, weight=0.15
+  R50_fines: MAE=48.788922, weight=0.10
+  R50_oversize: MAE=22.704892, weight=0.10
+  Weighted error=17.624926
+  Challenge score=5.369149
+
+Per-target test metrics:
+  P80: MAE=7.716563, RMSE=10.134223, R2=0.976694
+  fines_frac: MAE=0.007125, RMSE=0.014683, R2=0.956451
+  oversize_frac: MAE=0.027691, RMSE=0.038054, R2=0.989020
+  R95: MAE=40.397086, RMSE=68.853514, R2=0.917060
+  R50_fines: MAE=48.788922, RMSE=77.452079, R2=0.901567
+  R50_oversize: MAE=22.704892, RMSE=39.261569, R2=0.866974
+
+================================================================================
+Script: train_gbrt_2stage_with_cv.py
+Model specification:
+  - Two-stage MultiOutputRegressor(GradientBoostingRegressor(random_state=42))
+  - Stage 1 features: ['porosity', 'atmosphere', 'coupling', 'strength', 'shape_factor', 'energy', 'angle_rad']
+  - Stage 1 targets: ['P80', 'fines_frac', 'oversize_frac']
+  - Stage 2 targets: ['R95', 'R50_fines', 'R50_oversize']
+  - Stage 1 best hyperparameters: {'estimator__learning_rate': 0.025, 'estimator__max_depth': 5, 'estimator__min_samples_leaf': 12, 'estimator__n_estimators': 220, 'estimator__subsample': 0.5}
+  - Stage 2 best hyperparameters: {'estimator__learning_rate': 0.025, 'estimator__max_depth': 4, 'estimator__min_samples_leaf': 12, 'estimator__n_estimators': 180, 'estimator__subsample': 0.5}
+  - CV: KFold(n_splits=5, shuffle=True, random_state=42)
+  - Scoring: neg_mean_absolute_error
+
+Overall test metrics:
+  MAE=20.020592
+  RMSE=46.126951
+  R2=0.933075
+
+Challenge benchmark:
+  P80: MAE=7.695559, weight=0.30
+  R95: MAE=40.497140, weight=0.20
+  fines_frac: sMAPE=0.309388, weight=0.15
+  oversize_frac: sMAPE=0.203506, weight=0.15
+  R50_fines: MAE=49.248316, weight=0.10
+  R50_oversize: MAE=22.648521, weight=0.10
+  Weighted error=17.674713
+  Challenge score=5.354835
+
+Per-target test metrics:
+  P80: MAE=7.695559, RMSE=10.229721, R2=0.976253
+  fines_frac: MAE=0.007007, RMSE=0.014794, R2=0.955791
+  oversize_frac: MAE=0.027011, RMSE=0.037756, R2=0.989191
+  R95: MAE=40.497140, RMSE=69.724504, R2=0.914948
+  R50_fines: MAE=49.248316, RMSE=78.928603, R2=0.897779
+  R50_oversize: MAE=22.648521, RMSE=39.626934, R2=0.864487
